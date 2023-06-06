@@ -25,3 +25,5 @@ yarn-error.log*
 !.env
 
 src/ignore
+auto-imports.d.ts
+.eslintrc-auto-import.json
