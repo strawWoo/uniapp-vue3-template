@@ -1,6 +1,7 @@
 <template>
   <view
-    class="fixed top-0 w-full z-20 bg-red-400 bg-opacity-0"
+    class="fixed top-0 w-full z-20 bg-white transition duration-200"
+    :class="searchStyleChange ? 'bg-opacity-100' : 'bg-opacity-0'"
     :style="{ 'padding-top': mTop + 'px' }">
     <view
       class="flex flex-row space-x-2"
@@ -21,12 +22,13 @@
             v-for="(barType, index) in barTypes"
             :key="index"
             @click="selectBar(index)"
-            class="text-white shrink-0 mr-5 h-9 inline-block"
-            :class="
+            class="shrink-0 mr-5 h-9 inline-block"
+            :class="[
               isActiveBar(index)
                 ? 'text-md underline underline-offset-8 decoration-2'
-                : 'text-sm'
-            ">
+                : 'text-sm',
+              searchStyleChange ? ' text-black' : 'text-white'
+            ]">
             {{ barType }}
           </text>
         </scroll-view>
@@ -69,8 +71,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-
 const windowWidth = uni.getSystemInfoSync().windowWidth
 const mButton = uni.getMenuButtonBoundingClientRect()
 const mTop = ref(mButton.top)
@@ -82,6 +82,15 @@ const activeIndex = ref(0)
 const isIndex = ref(true)
 const isShowAllTypes = ref(false)
 const typesScrollLeft = ref(0)
+const searchStyleChange = ref(false)
+
+onPageScroll((e) => {
+  if (e.scrollTop > 50 && searchStyleChange.value === false) {
+    searchStyleChange.value = true
+  } else if (e.scrollTop <= 50 && searchStyleChange.value === true) {
+    searchStyleChange.value = false
+  }
+})
 
 let barTypes = ref([
   '首页',
@@ -114,7 +123,6 @@ function showAllType() {
   isShowAllTypes.value = !isShowAllTypes.value
 }
 
-// 从rem转为px
 function remToPx(rem: number) {
   return rem * 18
 }
