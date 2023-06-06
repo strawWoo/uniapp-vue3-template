@@ -13,16 +13,15 @@
     <view class="flex flex-row mx-4 mt-4 h-9">
       <view class="w-11/12">
         <scroll-view
-          enable-flex="true"
-          class="flex flex-row flex-nowrap h-9"
+          class="whitespace-nowrap h-9 no-scrollbar"
           scroll-x="true"
-          scroll-with-animation="true"
+          scroll-with-animation="false"
           :scroll-left="typesScrollLeft">
           <text
             v-for="(barType, index) in barTypes"
             :key="index"
             @click="selectBar(index)"
-            class="text-white shrink-0 mr-5 h-9"
+            class="text-white shrink-0 mr-5 h-9 inline-block"
             :class="
               isActiveBar(index)
                 ? 'text-md underline underline-offset-8 decoration-2'
@@ -33,7 +32,9 @@
         </scroll-view>
       </view>
       <viwe class="text-md w-1/12 text-right text-white shrink-0">
-        <text @click="showAllType">{{ isShowAllTypes ? '↑' : '↓' }}</text>
+        <view class="h-full w-full" @click="showAllType">
+          {{ isShowAllTypes ? '↑' : '↓' }}
+        </view>
       </viwe>
     </view>
   </view>
