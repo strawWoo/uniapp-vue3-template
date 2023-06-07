@@ -42,6 +42,7 @@
   </view>
 
   <view class="w-full bg-purple-400" :style="{ height: mBottom + 'px' }"></view>
+
   <view
     class="absolute w-full h-screen text-center z-10"
     :style="{ top: mBottom + 'px' }"
@@ -66,7 +67,50 @@
     </view>
     <view class="bg-gray-900 opacity-30 h-screen" @click="showAllType"></view>
   </view>
-  <view class="w-full h-screen bg-green-300" v-if="isIndex"></view>
+
+  <view class="flex flex-col w-full h-screen bg-gray-100" v-if="isIndex">
+    <view class="flex flex-row h-40 bg-red-300 pt-1">
+      <view class="uni-margin-wrap w-full">
+        <swiper
+          class="swiper"
+          circular
+          previous-margin="30rpx"
+          next-margin="30rpx">
+          <swiper-item class="flex flex-row justify-center items-center">
+            <image
+              class="w-full px-2"
+              mode="aspectFit"
+              src="https://images.unsplash.com/photo-1604999565976-8913ad2ddb7c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&h=160&q=80" />
+          </swiper-item>
+          <swiper-item class="flex flex-row justify-center items-center">
+            <image
+              class="w-full px-2"
+              mode="aspectFit"
+              src="https://images.unsplash.com/photo-1540206351-d6465b3ac5c1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&h=160&q=80" />
+          </swiper-item>
+          <swiper-item class="flex flex-row justify-center items-center">
+            <image
+              class="w-full px-2"
+              mode="aspectFit"
+              src="https://images.unsplash.com/photo-1622890806166-111d7f6c7c97?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&h=160&q=80" />
+          </swiper-item>
+        </swiper>
+      </view>
+    </view>
+    <view
+      class="mx-3 mt-3 h-9 bg-white rounded-lg flex flex-row space-x-1 items-center">
+      <view class="basis-11/12 rounded-lg flex flex-row pl-4">
+        <view class="mr-2">新闻头条</view>
+        <view class="mr-2">|</view>
+        <view class="text-xs text-gray-500 flex flex-row items-center">
+          如何打造一款爆款？
+        </view>
+      </view>
+      <view class="basis-1/12 text-gray-300 pr-3 text-right">
+        <text class="text-lg">></text>
+      </view>
+    </view>
+  </view>
   <view class="w-full h-screen bg-gray-200" v-if="!isIndex"></view>
 </template>
 
