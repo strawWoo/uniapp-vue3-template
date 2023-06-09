@@ -311,14 +311,14 @@
               <!-- 商品 -->
               <block v-for="(hotSelling, index) in hotSellingList" :key="index">
                 <view v-if="index % 2 == 0">
-                  <HotSellingCard :hot-selling="hotSelling"></HotSellingCard>
+                  <ProductFlowCard :hot-selling="hotSelling"></ProductFlowCard>
                 </view>
               </block>
             </view>
             <view class="flex flex-col gap-y-1">
               <block v-for="(hotSelling, index) in hotSellingList" :key="index">
                 <view v-if="index % 2 == 1">
-                  <HotSellingCard :hot-selling="hotSelling"></HotSellingCard>
+                  <ProductFlowCard :hot-selling="hotSelling"></ProductFlowCard>
                 </view>
               </block>
             </view>
@@ -420,14 +420,14 @@
           <!-- 商品 -->
           <block v-for="(hotSelling, index) in hotSellingList" :key="index">
             <view v-if="index % 2 == 0">
-              <HotSellingCard :hot-selling="hotSelling"></HotSellingCard>
+              <ProductFlowCard :hot-selling="hotSelling"></ProductFlowCard>
             </view>
           </block>
         </view>
         <view class="flex flex-col gap-y-1">
           <block v-for="(hotSelling, index) in hotSellingList" :key="index">
             <view v-if="index % 2 == 1">
-              <HotSellingCard :hot-selling="hotSelling"></HotSellingCard>
+              <ProductFlowCard :hot-selling="hotSelling"></ProductFlowCard>
             </view>
           </block>
         </view>
@@ -438,7 +438,7 @@
 
 <script setup lang="ts">
 import { HotSelling } from './entity/types'
-import HotSellingCard from './components/HotSellingCard/HotSellingCard.vue'
+import ProductFlowCard from '@/components/ProductFlowCard/ProductFlowCard.vue'
 
 const windowWidth = uni.getSystemInfoSync().windowWidth
 const mButton = uni.getMenuButtonBoundingClientRect()

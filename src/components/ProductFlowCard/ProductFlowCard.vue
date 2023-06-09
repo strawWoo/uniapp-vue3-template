@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import { HotSelling } from '../../entity/types'
+import { HotSelling } from '@/pages/index/entity/types'
 
 export default {
   props: {

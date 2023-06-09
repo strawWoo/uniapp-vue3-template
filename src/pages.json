@@ -5,8 +5,7 @@
 			"style": {
 				"navigationStyle": "custom",
 				"onReachBottomDistance": 20,
-				"navigationBarTextStyle": "black",
-				"backgroundColor": "#EEEEEE"
+				"navigationBarTextStyle": "black"
 			}
 		},
 		{
@@ -14,8 +13,7 @@
 			"style": {
 				"navigationStyle": "custom",
 				"onReachBottomDistance": 20,
-				"navigationBarTextStyle": "black",
-				"backgroundColor": "#EEEEEE"
+				"navigationBarTextStyle": "black"
 			}
 		},
 		{
@@ -34,6 +32,14 @@
 			"path": "pages/user/user",
 			"style": {
 				"navigationBarTitleText": "user"
+			}
+		},
+		{
+			"path": "pages/product/product_list/product_list",
+			"style": {
+				"navigationStyle": "custom",
+				"onReachBottomDistance": 20,
+				"navigationBarTextStyle": "black"
 			}
 		}
 	],

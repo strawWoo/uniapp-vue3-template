@@ -23,7 +23,9 @@
         type="text"
         class="rounded-full pl-10 h-8 bg-gray-100" />
     </view>
-    <view class="flex flex-row items-center justify-center basis-2/12">
+    <view
+      @click="searchGo"
+      class="flex flex-row items-center justify-center basis-2/12">
       <view class="text-right text-md">搜索</view>
     </view>
   </view>
@@ -45,14 +47,14 @@
         <!-- 商品 -->
         <block v-for="(hotSelling, index) in hotSellingList" :key="index">
           <view v-if="index % 2 == 0">
-            <HotSellingCard :hot-selling="hotSelling"></HotSellingCard>
+            <ProductFlowCard :hot-selling="hotSelling"></ProductFlowCard>
           </view>
         </block>
       </view>
       <view class="flex flex-col gap-y-1">
         <block v-for="(hotSelling, index) in hotSellingList" :key="index">
           <view v-if="index % 2 == 1">
-            <HotSellingCard :hot-selling="hotSelling"></HotSellingCard>
+            <ProductFlowCard :hot-selling="hotSelling"></ProductFlowCard>
           </view>
         </block>
       </view>
@@ -62,8 +64,8 @@
 
 <script lang="ts" setup>
 import FixedBar from '@/components/FixedBar/FixedBar.vue'
-import { HotSelling } from '../../entity/types'
-import HotSellingCard from '../../components/HotSellingCard/HotSellingCard.vue'
+import { HotSelling } from '@/pages/index/entity/types'
+import ProductFlowCard from '@/components/ProductFlowCard/ProductFlowCard.vue'
 
 const mButton = uni.getMenuButtonBoundingClientRect()
 const searchTop = ref(mButton.bottom + 12)
@@ -113,6 +115,12 @@ let hotSellingList: Ref<HotSelling[]> = ref([
 
 function toBack() {
   uni.navigateBack()
+}
+
+function searchGo() {
+  uni.navigateTo({
+    url: '/pages/product/product_list/product_list'
+  })
 }
 </script>
 
