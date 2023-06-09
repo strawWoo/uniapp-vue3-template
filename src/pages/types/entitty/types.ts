@@ -7,3 +7,8 @@ export type SubType = {
     subTypeName: string
     url: string
 }
+
+export type TypeLabelTop = {
+    index: string
+    top: number
+}

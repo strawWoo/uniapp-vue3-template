@@ -6,7 +6,7 @@
       </view>
     </template>
     <template #content>
-      <view class="bg-white pt-4 pb-2">
+      <view class="bg-white pt-[30rpx] pb-[20rpx]">
         <view class="mx-3 relative">
           <view
             class="absolute top-0 pl-3 flex flex-row items-center justify-center h-full">
@@ -16,7 +16,7 @@
             placeholder="点击搜索商品"
             placeholder-style="color: #bbbbbb; font-size:14px"
             type="text"
-            class="rounded-full pl-10 h-7 bg-gray-100" />
+            class="rounded-full pl-10 h-[55rpx] bg-gray-100" />
         </view>
       </view>
       <view
@@ -25,62 +25,64 @@
         <view
           v-for="(pt, index) in productTypes"
           :key="index"
-          :id="'pt-' + index"
-          class="py-4">
+          class="py-4 text-sm"
+          @click="selectType(index)"
+          :class="activeSideBar === index ? 'bg-gray-100 text-red-500' : ''">
           {{ pt.typeName }}
         </view>
       </view>
     </template>
   </fixed-bar>
-  <view class="h10 w-64 mt-64 ml-64">
-    <scroll-view
-      class="whitespace-nowrap no-scrollbar"
-      scroll-x="true"
-      scroll-with-animation="false">
-      <view>123</view>
-      <view>123</view>
-      <view>123</view>
-      <view>123</view>
-      <view>123</view>
-      <view>123</view>
-      <view>123</view>
-      <view>123</view>
-      <view>123</view>
-      <view>123</view>
-      <view>123</view>
-      <view>123</view>
-      <view>123</view>
-      <view>123</view>
-    </scroll-view>
+  <view
+    class="flex flex-col h-full w-[550rpx] ml-[200rpx] px-2 pt-4"
+    :style="{ marginTop: productTypesTop + 'px' }">
+    <view v-for="(pt, ptIndex) in productTypes" :key="ptIndex">
+      <view class="type-label font-medium ml-3 mb-2">{{ pt.typeName }}</view>
+      <view class="grid grid-cols-3 gap-1 py-5 mb-5 w-full rounded-lg bg-white">
+        <view
+          v-for="(subType, subIndex) in pt.subTypes"
+          :key="subIndex"
+          class="flex flex-col justify-center items-center w-full h-full space-y-1">
+          <image
+            mode="aspectFit"
+            class="w-full h-10 rounded-full"
+            :src="subType.url"></image>
+          <view class="text-center text-xs text-gray-500 font-black">
+            {{ subType.subTypeName }}
+          </view>
+        </view>
+      </view>
+    </view>
   </view>
 </template>
 
 <script lang="ts" setup>
 import FixedBar from '@/components/FixedBar/FixedBar.vue'
-import { ProductType } from './entitty/types'
+import { ProductType, TypeLabelTop } from './entitty/types'
+import { IsOutOfUpperBounds, IsOutOfLowerBounds } from '@/utils/arrayUtils'
 
 const productTypes: Ref<ProductType[]> = ref([
   {
     typeName: '手机',
     subTypes: [
       {
-        subTypeName: '魅族',
-        url: ''
+        subTypeName: '华为',
+        url: 'https://jmy-pic.baidu.com/0/pic/159601fc7f1e8e39dc7b9e31dc613f5f.jpg'
       },
       {
         subTypeName: 'OPPO',
-        url: ''
+        url: 'https://img1.baidu.com/it/u=3942809987,1137302445&fm=253&fmt=auto&app=138&f=JPG?w=500&h=250'
       },
       {
-        subTypeName: '华为',
-        url: ''
+        subTypeName: '中兴',
+        url: 'https://img1.baidu.com/it/u=2367536783,1277561976&fm=253&fmt=auto&app=120&f=JPEG?w=1128&h=800'
       },
       {
         subTypeName: '小米',
         url: ''
       },
       {
-        subTypeName: '中兴',
+        subTypeName: '魅族',
         url: ''
       }
     ]
@@ -286,24 +288,83 @@ const productTypes: Ref<ProductType[]> = ref([
     ]
   }
 ])
+const windowWidth = uni.getSystemInfoSync().windowWidth
 const mButton = uni.getMenuButtonBoundingClientRect()
-const productTypesLeft = ref(0)
-const productTypesTop = ref(mButton.bottom + 100)
+const productTypesTop = ref(mButton.bottom + (105 * windowWidth) / 750)
+const activeSideBar = ref(0)
+const typeLabelTops: Ref<TypeLabelTop[]> = ref([])
+const prevBounds: Ref<TypeLabelTop | undefined> = ref()
+const nextBounds: Ref<TypeLabelTop | undefined> = ref()
+const isScrolling = ref(false)
 
-const scrollTop = ref(0)
-function scroll(e: any) {
-  console.log('scrollTop', scrollTop, 'scroll', e)
+// 左右关联起来
+onPageScroll((e) => {
+  if (isScrolling.value) {
+    return
+  }
+  const scrollTop = e.scrollTop
+  const o = activeSideBar.value
+
+  if (prevBounds.value && o > 0 && scrollTop < prevBounds.value.top) {
+    activeSideBar.value = activeSideBar.value - 1
+  }
+  if (
+    nextBounds.value &&
+    o < typeLabelTops.value.length - 1 &&
+    scrollTop > nextBounds.value.top
+  ) {
+    activeSideBar.value = activeSideBar.value + 1
+  }
+
+  if (o !== activeSideBar.value) {
+    followPrevAndNextBounds()
+  }
+})
+
+function followPrevAndNextBounds() {
+  const currentBoundsIndex = activeSideBar.value
+  if (!IsOutOfLowerBounds(currentBoundsIndex, typeLabelTops.value, 1)) {
+    prevBounds.value = typeLabelTops.value[currentBoundsIndex - 1]
+  } else {
+    prevBounds.value = undefined
+  }
+  if (!IsOutOfUpperBounds(currentBoundsIndex, typeLabelTops.value, 1)) {
+    nextBounds.value = typeLabelTops.value[currentBoundsIndex + 1]
+  } else {
+    nextBounds.value = undefined
+  }
 }
 
 onMounted(() => {
   uni
     .createSelectorQuery()
-    .select('#side-bar')
-    .boundingClientRect((data) => {
-      console.log('data:', data)
+    .selectAll('.type-label')
+    .boundingClientRect((data: any) => {
+      for (let i in data) {
+        typeLabelTops.value.push({
+          index: i,
+          top: data[i].top - productTypesTop.value - 10
+        })
+      }
+      if (typeLabelTops.value.length > 1) {
+        nextBounds.value = typeLabelTops.value[1]
+      }
     })
     .exec()
 })
+
+function selectType(index: number) {
+  isScrolling.value = true
+  activeSideBar.value = index
+  uni.pageScrollTo({
+    scrollTop: typeLabelTops.value[index].top,
+    duration: 300,
+    complete: () => {
+      isScrolling.value = false
+      followPrevAndNextBounds()
+    }
+  })
+}
 </script>
 
 <style lang="scss" scoped></style>
