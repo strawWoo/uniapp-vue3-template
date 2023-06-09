@@ -5,13 +5,17 @@
 			"style": {
 				"navigationStyle": "custom",
 				"onReachBottomDistance": 20,
-				"navigationBarTextStyle": "black"
+				"navigationBarTextStyle": "black",
+				"backgroundColor": "#EEEEEE"
 			}
 		},
 		{
 			"path": "pages/types/types",
 			"style": {
-				"navigationBarTitleText": "types"
+				"navigationStyle": "custom",
+				"onReachBottomDistance": 20,
+				"navigationBarTextStyle": "black",
+				"backgroundColor": "#EEEEEE"
 			}
 		},
 		{

@@ -1,12 +1,8 @@
 <script setup lang="ts">
-onLaunch(() => {
-  console.log('App Launch')
-})
-onShow(() => {
-  console.log('App Show')
-})
-onHide(() => {
-  console.log('App Hide')
-})
+onLaunch(() => {})
+onShow(() => {})
+onHide(() => {})
 </script>
-<style lang="scss"></style>
+<style lang="scss">
+@import url('@/static/iconfont/iconfont.css');
+</style>

@@ -25,8 +25,9 @@
             :class="searchStyleChange ? ' bg-gray-100' : 'bg-white'" />
         </view>
       </view>
+
       <!-- 导航标签 -->
-      <view class="flex flex-row mx-4 mt-4 h-9">
+      <view class="flex flex-row mx-4 mt-4">
         <!-- 横向标签 -->
         <view class="w-11/12">
           <scroll-view
@@ -51,10 +52,14 @@
         </view>
         <!-- 全部分类 -->
         <viwe
-          class="text-md w-1/12 text-right shrink-0"
+          class="w-1/12"
           :class="[searchStyleChange ? ' text-black' : 'text-white']">
-          <view class="h-full w-full" @click="showAllType">
-            {{ isShowAllTypes ? '↑' : '↓' }}
+          <view class="text-right pt-[5rpx]" @click="showAllType">
+            <text
+              class="text-xs iconfont"
+              :class="
+                isShowAllTypes ? 'icon-xiangshang' : 'icon-xiangxia'
+              "></text>
           </view>
         </viwe>
       </view>
@@ -329,7 +334,7 @@
     v-if="!isIndex">
     <!-- 类型 -->
     <view
-      class="rounded-lg bg-white h-40 mt-3 mx-3 grid grid-cols-5 grid-rows-2 gap-x-3 gap-y-1 p-3">
+      class="rounded-lg bg-white h-40 mt-3 mx-3 grid grid-cols-5 grid-rows-2 gap-x-3 gap-y-1 px-1 py-3">
       <view
         class="flex flex-col justify-center items-center w-full h-full space-y-1">
         <image
@@ -404,10 +409,7 @@
       </view>
       <view
         class="flex flex-col justify-center items-center w-full h-full space-y-1">
-        <image
-          mode="aspectFit"
-          class="w-20 h-20 rounded-full"
-          src="https://img95.699pic.com/xsj/02/wt/to.jpg%21/fw/700/watermark/url/L3hzai93YXRlcl9kZXRhaWwyLnBuZw/align/southeast"></image>
+        <image mode="aspectFit" class="w-20 h-20 rounded-full" src=""></image>
         <view class="text-center text-xs text-gray-500 font-black">更多</view>
       </view>
     </view>
@@ -436,7 +438,7 @@
 
 <script setup lang="ts">
 import { HotSelling } from './entity/types'
-import HotSellingCard from './component/HotSelling/HotSellingCard.vue'
+import HotSellingCard from './components/HotSellingCard/HotSellingCard.vue'
 
 const windowWidth = uni.getSystemInfoSync().windowWidth
 const mButton = uni.getMenuButtonBoundingClientRect()
