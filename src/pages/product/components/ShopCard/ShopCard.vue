@@ -13,7 +13,7 @@
           <view>
             <text class="font-bold mr-2">{{ shopInfo.name }}</text>
             <text
-              class="text-xs bg-red-600 text-white px-1"
+              class="text-xs bg-red-600 text-white pl-1 pr-2 rounded-md"
               v-if="shopInfo.isSelf">
               自营
             </text>
@@ -21,6 +21,7 @@
           <view>
             <text
               v-for="i in 5"
+              :key="i"
               class="iconfont mr-1 icon-pingfen text-xs text-red-600"
               :class="
                 shopInfo.evaluateScore > i ? 'text-red-600' : 'text-gray-600'
@@ -40,12 +41,15 @@
     </view>
     <!-- 店铺商品图片 -->
     <view v-if="showProductList" class="grid grid-cols-3 gap-2">
-      <view v-for="product in shopInfo.productLists" class="relative">
+      <view
+        v-for="product in shopInfo.productLists"
+        :key="product.id"
+        class="relative">
         <image
           class="h-[200rpx] w-[200rpx] rounded-lg"
           :src="product.coverImageUrl"></image>
         <view
-          class="absolute bg-gray-950 bg-opacity-50 right-1 px-1 rounded-md bottom-1 text-white">
+          class="absolute bg-gray-950 bg-opacity-50 right-[12rpx] px-1 rounded-md bottom-[12rpx] text-white">
           <text class="text-[8px] text-gray-200">￥</text>
           <text class="text-xs text-gray-200">
             {{ TwoDecimalPlaces(product.price) }}

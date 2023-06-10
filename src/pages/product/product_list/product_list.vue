@@ -11,7 +11,7 @@
     <template #content>
       <view class="bg-red-600 pt-2 pb-10">
         <!-- 搜索框 -->
-        <view class="mx-3 mb-3">
+        <view class="mx-3">
           <view class="relative">
             <view
               class="absolute top-0 pl-3 flex flex-row items-center justify-center h-full">
@@ -25,7 +25,9 @@
           </view>
         </view>
         <!-- tab标签 -->
-        <view class="flex flex-row w-full justify-around">
+        <view
+          v-if="!isSpecifyStore"
+          class="mt-3 flex flex-row w-full justify-around">
           <view
             @click="selectProduct"
             class="text-white"
@@ -44,7 +46,8 @@
       <view
         v-if="productOrStore"
         class="flex flex-row justify-around rounded-lg bg-white py-3 -mt-7">
-        <view>默认</view>
+        <view v-if="!isSpecifyStore">默认</view>
+        <view v-if="isSpecifyStore">{{ specifyStore.name }}</view>
         <view @click="priceStatusChange">
           价格
           <image
@@ -83,7 +86,7 @@
       <view class="bg-gray-100 h-3 w-full"></view>
     </template>
   </fixed-bar>
-  <view v-if="productOrStore" class="mt-56">
+  <view v-if="productOrStore" :class="isSpecifyStore ? ' mt-48' : 'mt-56'">
     <view
       class="flex flex-col mt-10 mx-3 mb-3 text-center space-y-3 items-center">
       <view class="grid grid-cols-2 gap-2 w-full">
@@ -108,7 +111,9 @@
   </view>
 
   <view v-if="!productOrStore" class="flex flex-col space-y-3 mt-[720rpx]">
-    <view v-for="shopInfo in shopInfos.filter((_, index) => index > 0)">
+    <view
+      v-for="shopInfo in shopInfos.filter((_, index) => index > 0)"
+      :key="shopInfo.id">
       <ShopCard :shop-info="shopInfo" :show-product-list="false"></ShopCard>
     </view>
     <view class="pb-10 text-gray-300 text-center">已经到底啦！</view>
@@ -119,12 +124,17 @@
 import FixedBar from '@/components/FixedBar/FixedBar.vue'
 import { HotSelling } from '@/pages/index/entity/types'
 import ProductFlowCard from '@/components/ProductFlowCard/ProductFlowCard.vue'
-import { ShopInfo } from '../entity/types'
+import { ShopInfo, SpecifyStore } from '@/pages/product/entity/types'
 import ShopCard from '@/pages/product/components/ShopCard/ShopCard.vue'
 
 const priceStatus = ref(0)
 const sellStatus = ref(0)
 const productOrStore = ref(true)
+const isSpecifyStore = ref(false)
+const specifyStore: Ref<SpecifyStore> = ref({
+  id: 0,
+  name: ''
+})
 
 let hotSellingList: Ref<HotSelling[]> = ref([
   {
@@ -180,16 +190,19 @@ const shopInfos: Ref<ShopInfo[]> = ref([
     evaluateScore: 3,
     productLists: [
       {
+        id: 1,
         coverImageUrl:
           'https://img2.baidu.com/it/u=2555939542,3076959347&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
         price: 148
       },
       {
+        id: 2,
         coverImageUrl:
           'https://img2.baidu.com/it/u=1825692511,69642313&fm=253&fmt=auto&app=138&f=JPEG?w=640&h=480',
         price: 19.99
       },
       {
+        id: 3,
         coverImageUrl:
           'https://img2.baidu.com/it/u=583177817,68195099&fm=253&fmt=auto&app=120&f=PNG?w=565&h=500',
         price: 11400.5
@@ -207,7 +220,7 @@ const shopInfos: Ref<ShopInfo[]> = ref([
     productLists: []
   },
   {
-    id: 2,
+    id: 3,
     name: '花花公子旗舰店',
     logoUrl:
       'https://bkimg.cdn.bcebos.com/pic/d4628535e5dde71190efc11d1ea3d91b9d16fcfacb81',
@@ -217,7 +230,7 @@ const shopInfos: Ref<ShopInfo[]> = ref([
     productLists: []
   },
   {
-    id: 2,
+    id: 3,
     name: '花花公子旗舰店',
     logoUrl:
       'https://bkimg.cdn.bcebos.com/pic/d4628535e5dde71190efc11d1ea3d91b9d16fcfacb81',
@@ -227,7 +240,7 @@ const shopInfos: Ref<ShopInfo[]> = ref([
     productLists: []
   },
   {
-    id: 2,
+    id: 4,
     name: '花花公子旗舰店',
     logoUrl:
       'https://bkimg.cdn.bcebos.com/pic/d4628535e5dde71190efc11d1ea3d91b9d16fcfacb81',
@@ -237,7 +250,7 @@ const shopInfos: Ref<ShopInfo[]> = ref([
     productLists: []
   },
   {
-    id: 2,
+    id: 5,
     name: '花花公子旗舰店',
     logoUrl:
       'https://bkimg.cdn.bcebos.com/pic/d4628535e5dde71190efc11d1ea3d91b9d16fcfacb81',
@@ -247,7 +260,7 @@ const shopInfos: Ref<ShopInfo[]> = ref([
     productLists: []
   },
   {
-    id: 2,
+    id: 6,
     name: '花花公子旗舰店',
     logoUrl:
       'https://bkimg.cdn.bcebos.com/pic/d4628535e5dde71190efc11d1ea3d91b9d16fcfacb81',
@@ -257,7 +270,7 @@ const shopInfos: Ref<ShopInfo[]> = ref([
     productLists: []
   },
   {
-    id: 2,
+    id: 7,
     name: '花花公子旗舰店',
     logoUrl:
       'https://bkimg.cdn.bcebos.com/pic/d4628535e5dde71190efc11d1ea3d91b9d16fcfacb81',
@@ -267,7 +280,7 @@ const shopInfos: Ref<ShopInfo[]> = ref([
     productLists: []
   },
   {
-    id: 2,
+    id: 8,
     name: '花花公子旗舰店',
     logoUrl:
       'https://bkimg.cdn.bcebos.com/pic/d4628535e5dde71190efc11d1ea3d91b9d16fcfacb81',
@@ -277,7 +290,7 @@ const shopInfos: Ref<ShopInfo[]> = ref([
     productLists: []
   },
   {
-    id: 2,
+    id: 9,
     name: '花花公子旗舰店',
     logoUrl:
       'https://bkimg.cdn.bcebos.com/pic/d4628535e5dde71190efc11d1ea3d91b9d16fcfacb81',
@@ -287,7 +300,7 @@ const shopInfos: Ref<ShopInfo[]> = ref([
     productLists: []
   },
   {
-    id: 2,
+    id: 10,
     name: '花花公子旗舰店',
     logoUrl:
       'https://bkimg.cdn.bcebos.com/pic/d4628535e5dde71190efc11d1ea3d91b9d16fcfacb81',
@@ -297,7 +310,7 @@ const shopInfos: Ref<ShopInfo[]> = ref([
     productLists: []
   },
   {
-    id: 2,
+    id: 11,
     name: '花花公子旗舰店',
     logoUrl:
       'https://bkimg.cdn.bcebos.com/pic/d4628535e5dde71190efc11d1ea3d91b9d16fcfacb81',
@@ -307,7 +320,7 @@ const shopInfos: Ref<ShopInfo[]> = ref([
     productLists: []
   },
   {
-    id: 2,
+    id: 12,
     name: '花花公子旗舰店',
     logoUrl:
       'https://bkimg.cdn.bcebos.com/pic/d4628535e5dde71190efc11d1ea3d91b9d16fcfacb81',
@@ -317,7 +330,7 @@ const shopInfos: Ref<ShopInfo[]> = ref([
     productLists: []
   },
   {
-    id: 2,
+    id: 13,
     name: '花花公子旗舰店',
     logoUrl:
       'https://bkimg.cdn.bcebos.com/pic/d4628535e5dde71190efc11d1ea3d91b9d16fcfacb81',
@@ -327,7 +340,7 @@ const shopInfos: Ref<ShopInfo[]> = ref([
     productLists: []
   },
   {
-    id: 2,
+    id: 14,
     name: '花花公子旗舰店',
     logoUrl:
       'https://bkimg.cdn.bcebos.com/pic/d4628535e5dde71190efc11d1ea3d91b9d16fcfacb81',
@@ -337,7 +350,7 @@ const shopInfos: Ref<ShopInfo[]> = ref([
     productLists: []
   },
   {
-    id: 2,
+    id: 15,
     name: '花花公子旗舰店',
     logoUrl:
       'https://bkimg.cdn.bcebos.com/pic/d4628535e5dde71190efc11d1ea3d91b9d16fcfacb81',
@@ -347,6 +360,19 @@ const shopInfos: Ref<ShopInfo[]> = ref([
     productLists: []
   }
 ])
+
+onLoad((params: any) => {
+  console.log('params', params)
+  if (params.id == undefined) {
+    return
+  }
+
+  isSpecifyStore.value = true
+  specifyStore.value = {
+    id: params.id,
+    name: params.name
+  }
+})
 
 function selectProduct() {
   productOrStore.value = true

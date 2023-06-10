@@ -1,12 +1,12 @@
 <template>
-  <fixed-bar>
+  <fixed-bar style="pointer-events: none">
     <template #title>
       <view class="flex flex-row w-full h-full items-center mx-3">
         <view class="text-lg">商品分类</view>
       </view>
     </template>
     <template #content>
-      <view class="bg-white pt-[30rpx] pb-[20rpx]">
+      <view class="bg-white pt-[30rpx] pb-[20rpx]" style="pointer-events: auto">
         <view class="mx-3 relative">
           <view
             class="absolute top-0 pl-3 flex flex-row items-center justify-center h-full">
@@ -14,12 +14,15 @@
           </view>
           <input
             placeholder="点击搜索商品"
+            confirm-type="search"
             placeholder-style="color: #bbbbbb; font-size:14px"
             type="text"
-            class="rounded-full pl-10 h-[55rpx] bg-gray-100" />
+            class="rounded-full pl-10 h-[55rpx] bg-gray-100"
+            @confirm="searchDo" />
         </view>
       </view>
       <view
+        style="pointer-events: auto"
         id="side-bar"
         class="h-screen w-[200rpx] bg-white border-t text-center border-gray-200">
         <view
@@ -44,6 +47,7 @@
           :key="subIndex"
           class="flex flex-col justify-center items-center w-full h-full space-y-1">
           <image
+            @click.capture="jumpToProductList(subIndex, subType.subTypeName)"
             mode="aspectFit"
             class="w-full h-10 rounded-full"
             :src="subType.url"></image>
@@ -363,6 +367,19 @@ function selectType(index: number) {
       isScrolling.value = false
       followPrevAndNextBounds()
     }
+  })
+}
+
+function searchDo() {
+  uni.navigateTo({
+    url: '/pages/product/product_list/product_list'
+  })
+}
+
+function jumpToProductList(id: number, name: string) {
+  console.log('jump', id, name)
+  uni.navigateTo({
+    url: `/pages/product/product_list/product_list?id=${id}&name=${name}`
   })
 }
 </script>

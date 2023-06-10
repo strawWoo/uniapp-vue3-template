@@ -2,6 +2,7 @@
   <view class="fixed top-0 w-full z-20">
     <view class="bg-white" :style="{ 'padding-top': mTop + 'px' }">
       <view
+        style="pointer-events: auto"
         class="flex flex-row space-x-2"
         :style="{ width: searchWidth + 'px', height: searchHight + 'px' }">
         <slot name="title"></slot>

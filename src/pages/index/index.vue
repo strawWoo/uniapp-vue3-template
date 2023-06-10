@@ -336,6 +336,7 @@
     <view
       class="rounded-lg bg-white h-40 mt-3 mx-3 grid grid-cols-5 grid-rows-2 gap-x-3 gap-y-1 px-1 py-3">
       <view
+        @click="jumpToProductList(0, '华为')"
         class="flex flex-col justify-center items-center w-full h-full space-y-1">
         <image
           mode="aspectFit"
@@ -344,6 +345,7 @@
         <view class="text-center text-xs text-gray-500 font-black">华为</view>
       </view>
       <view
+        @click="jumpToProductList(1, 'OPPO')"
         class="flex flex-col justify-center items-center w-full h-full space-y-1">
         <image
           mode="aspectFit"
@@ -596,6 +598,13 @@ function swiperChange(e: any) {
 function toSearchPage() {
   uni.navigateTo({
     url: '/pages/index/sub_pages/search/search'
+  })
+}
+
+function jumpToProductList(id: number, name: string) {
+  console.log('jump', id, name)
+  uni.navigateTo({
+    url: `/pages/product/product_list/product_list?id=${id}&name=${name}`
   })
 }
 </script>

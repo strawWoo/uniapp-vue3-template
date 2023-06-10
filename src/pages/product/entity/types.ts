@@ -9,6 +9,12 @@ export type ShopInfo = {
 }
 
 export type ProductInfo = {
+    id: number;
     coverImageUrl: string;
     price: number;
+}
+
+export type SpecifyStore = {
+    id: number;
+    name: string;
 }
